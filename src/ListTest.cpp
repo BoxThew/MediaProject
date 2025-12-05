@@ -5,6 +5,7 @@
 
 #include <filesystem>
 #include <vector>
+#include "Database.hpp"
 
 using itr = std::filesystem::directory_iterator;
 

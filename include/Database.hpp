@@ -10,10 +10,10 @@ class Database{
 public:
     Database();
 
-    void add_song(Song* song);
+    static void add_song(Song* song);
 
 
-    std::vector<Song*> get_songs();
+    static std::vector<Song*> get_songs();
 
 };
 
