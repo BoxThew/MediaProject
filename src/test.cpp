@@ -3,8 +3,11 @@
 #include <tag.h>
 #include "Song.hpp"
 
+/*
+
 
 int main(){
+    std::string path = "songs/";
     TagLib::FileRef f("songs/Billy Joel - Vienna.mp3");
 
     if (f.isNull() || !f.tag()){
@@ -28,3 +31,5 @@ int main(){
 
     return 0;
 }
+
+*/

@@ -5,6 +5,7 @@ cmake_policy(SET CMP0009 NEW)
 # PROJECT_SOURCES at CMakeLists.txt:10 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/pleiades/Programming/Projects/mp3ME/src/*.cpp")
 set(OLD_GLOB
+  "/home/pleiades/Programming/Projects/mp3ME/src/ListTest.cpp"
   "/home/pleiades/Programming/Projects/mp3ME/src/Song.cpp"
   "/home/pleiades/Programming/Projects/mp3ME/src/test.cpp"
   )

@@ -591,6 +591,30 @@ tag_c/fast:
 	$(MAKE) $(MAKESILENT) -f external/taglib-2.1.1/bindings/c/CMakeFiles/tag_c.dir/build.make external/taglib-2.1.1/bindings/c/CMakeFiles/tag_c.dir/build
 .PHONY : tag_c/fast
 
+src/ListTest.o: src/ListTest.cpp.o
+.PHONY : src/ListTest.o
+
+# target to build an object file
+src/ListTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP3ME.dir/build.make CMakeFiles/MP3ME.dir/src/ListTest.cpp.o
+.PHONY : src/ListTest.cpp.o
+
+src/ListTest.i: src/ListTest.cpp.i
+.PHONY : src/ListTest.i
+
+# target to preprocess a source file
+src/ListTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP3ME.dir/build.make CMakeFiles/MP3ME.dir/src/ListTest.cpp.i
+.PHONY : src/ListTest.cpp.i
+
+src/ListTest.s: src/ListTest.cpp.s
+.PHONY : src/ListTest.s
+
+# target to generate assembly for a file
+src/ListTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP3ME.dir/build.make CMakeFiles/MP3ME.dir/src/ListTest.cpp.s
+.PHONY : src/ListTest.cpp.s
+
 src/Song.o: src/Song.cpp.o
 .PHONY : src/Song.o
 
@@ -684,6 +708,9 @@ help:
 	@echo "... MP3ME"
 	@echo "... tag"
 	@echo "... tag_c"
+	@echo "... src/ListTest.o"
+	@echo "... src/ListTest.i"
+	@echo "... src/ListTest.s"
 	@echo "... src/Song.o"
 	@echo "... src/Song.i"
 	@echo "... src/Song.s"
