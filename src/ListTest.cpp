@@ -27,17 +27,17 @@ int main(){
         s.set_album(tag->album().to8Bit(true));
         s.set_year_rel(tag->year());
 
-        Database::add_song(&s);
+        Database::add_song(s);
 
     }
     
 
     
-    for (Song *song : Database::get_songs()){
-        std::cout << "Title: " << song->get_title() << "\n";
-        std::cout << "Artist: " << song->get_artist() << "\n";
-        std::cout << "Album: " << song->get_album() << "\n";
-        std::cout << "Year: " << song->get_year_rel() << "\n";
+    for (Song song : Database::get_songs()){
+        std::cout << "Title: " << song.get_title() << "\n";
+        std::cout << "Artist: " << song.get_artist() << "\n";
+        std::cout << "Album: " << song.get_album() << "\n";
+        std::cout << "Year: " << song.get_year_rel() << "\n";
         std::cout << "\n\n";
     }
     

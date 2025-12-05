@@ -6,15 +6,15 @@
 
 class Database{
 public:
-    static std::vector<Song*> songs;
+    static std::vector<Song> songs;
 
 
     Database();
 
-    static void add_song(Song* song);
+    static void add_song(const Song& song);
 
 
-    static std::vector<Song*> get_songs();
+    static std::vector<Song>& get_songs();
 
 };
 
