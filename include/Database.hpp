@@ -12,8 +12,7 @@ public:
     Database();
 
     static void add_song(const Song& song);
-
-
+    static void remove_song(const Song& song);
     static std::vector<Song>& get_songs();
 
 };
