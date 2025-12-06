@@ -14,7 +14,6 @@ Database::Database(){
 void Database::add_song(const Song& song){
     songs.push_back(song);
 }
-
 void Databas::remove_song(const Song& song){
     //to do
 }
