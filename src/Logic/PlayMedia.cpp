@@ -4,11 +4,11 @@
 #include <vector>
 #include <queue>
 #include "SFML/Audio.hpp"
+#include "SFML/Audio/SoundSource.hpp"
 #include "SFML/System.hpp"
 
-#include <random>
 #include <ctime>
-#include <iostream>
+#include <iostream> 
 
 
 
@@ -31,7 +31,7 @@ std::vector<std::unique_ptr<Song>> PlayMedia::shuffle_queue(std::vector<std::uni
 }
 
 void PlayMedia::play_queue(){
-    //no songs in queue
+    
     bool playing = true;
     while(!queue.empty()){
         Song *next_song = queue.front();
@@ -42,18 +42,20 @@ void PlayMedia::play_queue(){
         m.play();
 
         while (playing){
-            if (m.getStatus() == sf::SoundSource::Status::Stopped){
+            if (!still_playing(m)){
                 break;
             }
 
-            //test skip
-            if (std::cin.peek() == '>'){
-                std::cin.get();
+            char peeked_in = std::cin.peek();
 
-                std::cin.ignore(1000, '\n');
+            if (skip_song(peeked_in)){
                 m.stop();
                 std::cout << "Skipping song.\n";
                 break;
+            }
+
+            if (prev_song(peeked_in)){
+                //FIXME
             }
 
             sf::sleep(sf::milliseconds(60));
@@ -65,4 +67,26 @@ void PlayMedia::play_queue(){
 
     std::cout << "Play queue is empty.\n";
 
+}
+
+
+
+bool PlayMedia::still_playing(const sf::Music& music) const{
+    return music.getStatus() != sf::SoundSource::Status::Stopped;
+}
+
+bool PlayMedia::skip_song(const char user_in) const{
+
+    std::cin.get();
+    std::cin.ignore(100, '\n');
+    return user_in == '>';
+}
+
+
+
+
+bool PlayMedia::prev_song(const char user_in) const{
+
+    //FIXME
+    return false;
 }
