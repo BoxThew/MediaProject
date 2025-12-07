@@ -35,8 +35,11 @@ Database::Database(){
 
 void Database::add_song(const Song& song){
     std::unique_ptr<Song> pSong = std::make_unique<Song>(song);
-    std::string song_artist = song.get_artist();
     Song *pS = pSong.get();
+
+    std::string song_artist = song.get_artist();
+    std::string song_album = song.get_album(); 
+
     if (artist_exists(song_artist)){
         songs_by_artists.at(song_artist).push_back(pS);
     }
@@ -45,6 +48,10 @@ void Database::add_song(const Song& song){
         artist_songs.push_back(pS);
         songs_by_artists[song_artist] = artist_songs;
     }
+
+    ArtistAlbumKey key(song_artist, song_album);
+    songs_by_artists_album[key].push_back(pS); 
+
     songs.push_back(std::move(pSong));
 }
 
