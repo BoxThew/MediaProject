@@ -35,7 +35,7 @@ class Database{
 
     btw, Song now has a "salt" member,
     */
-    static std::string make_salt();
+    static std::string make_salt(const Song& song);
 
     static bool artist_exists(const std::string& artist);
     static void make_artist(const std::string& artist);
