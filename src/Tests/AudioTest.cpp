@@ -14,11 +14,9 @@ using itr = std::filesystem::directory_iterator;
 
 
 
-/*
-int main(){
-    Song broken;
 
-    Database::add_song(broken);
+int main(){
+    
     std::string path = "songs";
     for (const auto& entry : itr(path)){
         Song s;
@@ -50,4 +48,3 @@ int main(){
     return 0;
 }
 
-*/

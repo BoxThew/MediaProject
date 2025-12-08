@@ -10,6 +10,13 @@
 #include "SFML/System.hpp"
 
 
+
+enum class Choice{
+    SKIP, PREV, NONE
+};
+
+Choice action(const char c);
+
 class PlayMedia{
 
     std::deque<Song*> queue;

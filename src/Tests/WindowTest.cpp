@@ -1,5 +1,6 @@
 #include "SFML/Window.hpp"
 
+/*
 
 int  main(){
     sf::Window window(sf::VideoMode({800, 800}), "Window test");
@@ -17,3 +18,5 @@ int  main(){
 
     return 0;
 }
+
+*/
