@@ -24,4 +24,5 @@ target_include_directories(MP3ME PRIVATE
 target_link_libraries(MP3ME PRIVATE 
                         tag
                         SFML::Audio
-                        SFML::System)
+                        SFML::System
+                        SFML::Window)

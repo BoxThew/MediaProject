@@ -11,37 +11,40 @@
 
 
 
+PlayMedia::PlayMedia(){
+    this->current_song = nullptr;
+}
+
 void PlayMedia::set_queue(const std::vector<std::unique_ptr<Song>>& songs){
     for (const auto& song : songs){
-        queue.push(song.get());
+        queue.push_back(song.get());
     }
 }
 
+//removed shuffle for now just to focus on main implementation first
 
-//If time, implement shuffle function
-
-void PlayMedia::play_queue(){
+void PlayMedia::play_songs(){
     
     bool playing = true;
     while(!queue.empty()){
-        Song *next_song = queue.front();
-        sf::Music m(next_song->get_file_name());
+        current_song = queue.front();
+        sf::Music m;
 
-
-        if(current_song != nullptr){
-            set_history(current_song); 
+        if (!m.openFromFile(current_song->get_file_name())){
+            std::cout << "Error: Could not open " <<
+            current_song->get_file_name() << ".\n";
+            queue.pop_front();
+            continue;
         }
-        current_song = next_song; 
-        
-        std::cout << "Now playing " << next_song->get_title() <<
-                    " by " << next_song->get_artist() << "!\n\n";
+
+        std::cout << "Now playing " << current_song->get_title() <<
+                    " by " << current_song->get_artist() << "!\n\n";
         m.play();
 
         while (playing){
             if (!still_playing(m)){
                 break;
             }
-
             char peeked_in = std::cin.peek();
 
             if (skip_song(peeked_in)){
@@ -57,9 +60,13 @@ void PlayMedia::play_queue(){
             sf::sleep(sf::milliseconds(60));
         
         }
-        queue.pop();
+        queue.pop_front();
 
     }
+    
+    if(current_song){
+        set_history(current_song); 
+        }
 
     std::cout << "Play queue is empty.\n";
 

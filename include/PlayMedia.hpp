@@ -3,8 +3,8 @@
 #include "SFML/Audio/SoundSource.hpp"
 #include "Song.hpp"
 #include <vector>
-#include <queue>
-#include<stack> 
+#include <deque>
+#include <stack> 
 #include <memory>
 #include "SFML/Audio.hpp"
 #include "SFML/System.hpp"
@@ -12,20 +12,20 @@
 
 class PlayMedia{
 
-    std::queue<Song*> queue;
+    std::deque<Song*> queue;
     std::stack<Song*> history;
-    Song* current_song = nullptr; 
+    Song* current_song; 
 
 
 
 public:
+    PlayMedia();
+
     void set_queue(const std::vector<std::unique_ptr<Song>>& songs);
-    std::vector<std::unique_ptr<Song>> shuffle_queue(const std::vector<std::unique_ptr<Song>> songs);
 
+    void play_songs();
 
-    void play_queue();
-
-    void set_history(Song* song);
+    void set_history(Song *song);
 
     void play_back(); 
 

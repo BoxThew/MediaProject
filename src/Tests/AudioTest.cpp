@@ -14,8 +14,11 @@ using itr = std::filesystem::directory_iterator;
 
 
 
-
+/*
 int main(){
+    Song broken;
+
+    Database::add_song(broken);
     std::string path = "songs";
     for (const auto& entry : itr(path)){
         Song s;
@@ -36,12 +39,15 @@ int main(){
 
     }
 
+    
     PlayMedia p;
 
     p.set_queue(Database::get_all_songs());
 
-    p.play_queue();
+    p.play_songs();
     
     
     return 0;
 }
+
+*/
