@@ -11,7 +11,7 @@ int  main(){
 
     TagLib::Tag *tag = f.tag();
 
-    Song s("salt");
+    Song s;
     s.set_artist(tag->artist().to8Bit(true));
     s.set_title(tag->title().to8Bit(true));
     s.set_album(tag->album().to8Bit(true));

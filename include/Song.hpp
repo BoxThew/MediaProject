@@ -13,13 +13,11 @@ class Song{
     unsigned int year_rel;
     std::vector<std::string> genres;
 
-    std::string salt;
-
     unsigned int times_played;
     
 
 public:
-    Song(const std::string& salt);
+    Song();
 
     void set_file_name(const std::string& file_name);
     void set_title(const std::string& title);
@@ -40,7 +38,6 @@ public:
     std::vector<std::string> get_genres() const;
     unsigned int get_times_played() const;
 
-    std::string get_salt() const;
 
 };
 

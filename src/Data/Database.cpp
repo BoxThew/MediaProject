@@ -8,6 +8,7 @@
 #include <utility>
 #include <string>
 #include <algorithm> 
+#include <stdexcept>
 
 
 
@@ -16,7 +17,7 @@ std::unordered_map<std::string, std::vector<Song*>> Database::songs_by_artists{}
 std::unordered_map<std::string, std::vector<Song*>> Database::songs_in_album{};
 
 
-Database::Database() : song_pepper("Urdasalt2mypepper!"){
+Database::Database(){
 
 }
 
@@ -62,7 +63,6 @@ void Database::add_song(const Song& song){
     add_to_artist(artist, pSong);
 
 
-    //accomodate for salt and pepper maybe
     std::string album = artist + album_title;
 
     if (!album_exists(album)){
@@ -143,3 +143,23 @@ void Database::remove_song(const Song& song){
 
 
 std::vector<std::unique_ptr<Song>>& Database::get_all_songs(){return songs;}
+
+std::vector<Song*>& Database::get_artist_songs(const std::string& artist){
+    if (artist_exists(artist)){
+        return songs_by_artists.at(artist);
+    }
+
+    throw std::out_of_range("Artist " + artist + " not found.\n");
+}
+
+std::vector<Song*>& Database::get_album_songs(const std::string& artist,
+                                                const std::string& album){
+    std::string art_alb = artist + album;
+    if (album_exists(art_alb)){
+        return songs_in_album.at(artist + album);
+    }
+    
+    throw std::out_of_range("Album " + album + " by " +
+                            artist + " not found.\n");
+
+}

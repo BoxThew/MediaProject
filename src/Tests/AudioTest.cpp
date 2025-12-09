@@ -19,7 +19,7 @@ int main(){
     
     std::string path = "songs";
     for (const auto& entry : itr(path)){
-        Song s("tets salt");
+        Song s;
         std::string file_path = entry.path();
         TagLib::FileRef f(file_path.c_str());
         if (f.isNull() || !f.tag()){
@@ -40,7 +40,7 @@ int main(){
     
     PlayMedia p;
 
-    p.set_queue(Database::get_all_songs());
+    p.set_queue(Database::get_artist_songs("TWICE"));
 
     p.play_songs();
     
