@@ -25,4 +25,5 @@ target_link_libraries(MP3ME PRIVATE
                         tag
                         SFML::Audio
                         SFML::System
-                        SFML::Window)
+                        SFML::Window
+                        SFML::Graphics)
