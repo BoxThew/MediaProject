@@ -9,14 +9,16 @@
 #include <ctime>
 #include <iostream> 
 
-Choice action(const char c){
+PlayBack action(const char c){
     switch(c){
         default:
-            return Choice::NONE;
+            return PlayBack::NONE;
         case '>':
-            return Choice::SKIP;
+            return PlayBack::SKIP;
         case '<':
-            return Choice::PREV;
+            return PlayBack::PREV;
+        case '=':
+            return PlayBack::TOGGLE;
     }
 
 }
@@ -25,73 +27,89 @@ PlayMedia::PlayMedia(){
     this->current_song = nullptr;
 }
 
+
+//for entire song library
 void PlayMedia::set_queue(const std::vector<std::unique_ptr<Song>>& songs){
     for (const auto& song : songs){
         queue.push_back(song.get());
     }
 }
 
-//removed shuffle for now just to focus on main implementation first
-
-void PlayMedia::play_songs(){
-    
-    play:
-    while(!queue.empty()){
-        current_song = queue.front();
-        sf::Music m;
-
-        if (!m.openFromFile(current_song->get_file_name())){
-            std::cout << "Error: Could not open " <<
-            current_song->get_file_name() << ".\n";
-            queue.pop_front();
-            continue;
-        }
-
-        std::cout << "Now playing " << current_song->get_title() <<
-                    " by " << current_song->get_artist() << "!\n\n";
-        m.play();
-        bool playing = true;
-        while (playing){
-            if (!still_playing(m)){
-                break;
-            }
-            char peeked_in = std::cin.peek();
-            std::cin.get();
-
-            switch(action(peeked_in)){
-                default:
-                    break;
-                case Choice::SKIP:
-                    playing = false;
-                    m.stop();
-                    std::cout << "Skipping song.\n";
-                    break;
-                case Choice::PREV:
-                    playing = false;
-                    m.stop();
-                    std::cout << "Going back a song.\n";
-                    play_back();
-                    goto play;
-                    break;
-            }
-
-
-
-            sf::sleep(sf::milliseconds(60));
-        
-        }
-        //After song played
-        if(current_song){
-        set_history(current_song); 
-        }
-        queue.pop_front();
-
+//for albums and songs by artists
+void PlayMedia::set_queue(const std::vector<Song*>& songs){
+    for (const auto& song : songs){
+        queue.push_back(song);
     }
-    
-    std::cout << "Play queue is empty.\n";
-
 }
 
+void PlayMedia::play_songs(){
+    while (!queue.empty()){
+
+        current_song = queue.front();
+
+        PlayBack result = play_current_song();
+
+        switch(result){
+            default:
+                next_song();
+                break;
+
+            case PlayBack::SKIP:
+            case PlayBack::PREV:
+                continue;
+                break;
+        }
+    }
+
+    std::cout << "Play queue is empty.\n";
+}
+
+PlayBack PlayMedia::play_current_song(){
+    sf::Music music;
+    std::string artist = current_song->get_artist();
+    std::string title = current_song->get_title();
+
+    if (!music.openFromFile(current_song->get_file_name())){
+        std::cout << "Error trying to read " << title << " by " << artist <<
+                        ".\n";
+        
+        return PlayBack::ERROR;
+    }
+    std::cout << "Now playing " << title << " by " << artist << "!\n";
+    music.play();
+    bool playing = true;
+    while (playing){
+
+        if (!still_playing(music)){
+            break;
+        }
+
+        char peeked = std::cin.peek();
+        std::cin.get();
+        PlayBack choice = action(peeked);
+        
+        switch(choice){
+            default:
+                break;
+
+            case PlayBack::SKIP:
+                skip_song(music);
+                return PlayBack::SKIP;
+
+            case PlayBack::PREV:
+                prev_song(music);
+                return PlayBack::PREV;
+
+            case PlayBack::TOGGLE:
+                toggle_song(music);
+
+        }
+        
+        sf::sleep(sf::milliseconds(60));
+    }
+
+    return PlayBack::FINISHED;
+}
 
 void PlayMedia::set_history(Song* song){
     if(song){
@@ -102,7 +120,24 @@ void PlayMedia::set_history(Song* song){
     }
 }
 
-void PlayMedia::play_back(){
+bool PlayMedia::still_playing(const sf::Music& music) const{
+    return music.getStatus() != sf::SoundSource::Status::Stopped;
+}
+
+void PlayMedia::next_song(){
+    set_history(current_song);
+    queue.pop_front();
+}
+
+void PlayMedia::skip_song(sf::Music& music){
+    music.stop();
+    set_history(current_song);
+    std::cout << "Skipping song.\n";
+    queue.pop_front();
+
+}
+
+void PlayMedia::prev_song(sf::Music& music){
     if(history.empty()){ 
         std::cout << "History is empty.\n"; 
         return; 
@@ -117,20 +152,10 @@ void PlayMedia::play_back(){
     }
 }
 
-bool PlayMedia::still_playing(const sf::Music& music) const{
-    return music.getStatus() != sf::SoundSource::Status::Stopped;
-}
-
-bool PlayMedia::skip_song(const char user_in) const{
-
-    std::cin.get();
-    std::cin.ignore(100, '\n');
-    return user_in == '>';
-}
-
-bool PlayMedia::prev_song(const char user_in) const{
-
-    std::cin.get();
-    std::cin.ignore(100, '\n');
-    return user_in == '<';
+void PlayMedia::toggle_song(sf::Music& music){
+    if (music.getStatus() == sf::SoundSource::Status::Paused)
+        music.play();
+    
+    else
+        music.pause();
 }

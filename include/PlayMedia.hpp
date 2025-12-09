@@ -11,17 +11,17 @@
 
 
 
-enum class Choice{
-    SKIP, PREV, NONE
+enum class PlayBack{
+    PREV, TOGGLE, SKIP, FINISHED, ERROR, NONE
 };
 
-Choice action(const char c);
+PlayBack action(const char c);
 
 class PlayMedia{
 
     std::deque<Song*> queue;
     std::stack<Song*> history;
-    Song* current_song; 
+    Song *current_song; 
 
 
 
@@ -30,17 +30,27 @@ public:
 
     void set_queue(const std::vector<std::unique_ptr<Song>>& songs);
 
+    void set_queue(const std::vector<Song*>& songs);
+
     void play_songs();
 
     void set_history(Song *song);
 
-    void play_back(); 
 
     bool still_playing(const sf::Music& music) const;
 
-    bool skip_song(const char user_in) const;
+    void skip_song(sf::Music& music);
 
-    bool prev_song(const char user_in) const;
+    void next_song();
+
+    void prev_song(sf::Music& music);
+
+    void toggle_song(sf::Music& music);
+
+    PlayBack play_current_song();
+
+
+
 
 
 };
