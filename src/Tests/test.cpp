@@ -4,7 +4,7 @@
 #include "Song.hpp"
 #include "Database.hpp"
 
-/*
+/* 
 int main(){
     std::string path = "songs/";
     TagLib::FileRef f("songs/Billy Joel - Vienna.mp3");
@@ -45,8 +45,13 @@ int main(){
     std::cout << "Second song is " << s2.get_title() << '\n';
 
 
+    //Test: remove_song 
+    Database::remove_song(s2);
+    std::cout<<"After removal:\n";
+    for(auto& up: Database::get_all_songs()){
+        std::cout<< up->get_title() <<< "by" << up->get_artists() <<"\n"; 
+    }
 
     return 0;
 }
-
 */
