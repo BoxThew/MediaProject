@@ -5,18 +5,33 @@
 #include "WindowADT.hpp"
 #include "SFML/Graphics/Font.hpp"
 # include "SFML/Graphics/Text.hpp"
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include "Song.hpp"
 #include "Database.hpp"
 #include <vector>
 
-class MediaWindow : public WindowADT{
+class MediaWindow: public WindowADT{
 	sf::Font title_font;
 	sf::Text *song_title;
 	sf::Text *artist_text;
 
+	//song list
 	std::vector<Song*> songs;
 	int selected_index = -1; 
+	int first_visible_index = 0; 
 
+	//Buttons
+	sf::RectangleShape prev_button;
+	sf::RectangleShape play_button;
+	sf::RectangleShape next_button;
+
+	sf::Text prev_label;
+	sf::Text play_label;
+	sf::Text next_label; 
+
+	//Audio
+	sf::Music music; 
 
 
 	void display_song_title(const Song* song);
@@ -26,6 +41,8 @@ class MediaWindow : public WindowADT{
 	void display_song_album(const Song* song);
 
 	void center_text(sf::Text* text);
+
+	void play_selected_song(); 
 
 
 protected:
