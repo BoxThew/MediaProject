@@ -17,6 +17,11 @@ WindowADT::WindowADT(const std::string& window_title){
 	
 }
 
+
+bool WindowADT::is_open() const{
+	return window.isOpen();
+}
+
 /*
 determines what the user is doing, whether they close window, press a button
 type something, etc
@@ -34,15 +39,22 @@ main loop of the window
 void WindowADT::run(){
 	while (window.isOpen()){
 
-		while (const std::optional<sf::Event> event = window.pollEvent()){
-			handle_event(*event);
-		}
+		process_events();
 
-		window.clear();
-
-		draw();
-		window.display();
+		render_once();
+		
 	}
 }
 
 
+void WindowADT::process_events(){
+	while (const std::optional<sf::Event> event = window.pollEvent()){
+			handle_event(*event);
+		}
+}
+
+void WindowADT::render_once(){
+	window.clear();
+	draw();
+	window.display();
+}

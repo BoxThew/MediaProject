@@ -46,6 +46,7 @@ void PlayMedia::play_songs(){
     while (!queue.empty()){
 
         current_song = queue.front();
+        window.display_song_info(current_song);
 
         PlayBack result = play_current_song();
 
@@ -77,12 +78,10 @@ PlayBack PlayMedia::play_current_song(){
     }
     std::cout << "Now playing " << title << " by " << artist << "!\n";
     music.play();
-    bool playing = true;
-    while (playing){
+    while (still_playing(music) && window.is_open()){
 
-        if (!still_playing(music)){
-            break;
-        }
+        window.process_events();
+        window.render_once();
 
         char peeked = std::cin.peek();
         std::cin.get();

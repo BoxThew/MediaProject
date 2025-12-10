@@ -10,11 +10,11 @@ MediaWindow::MediaWindow() : WindowADT("Media Window"){
 	if(!title_font.openFromFile("assets/Fonts/Sono-Bold.ttf")){
 		std::cout << "No Font found.\n";
 	}
-	t = new sf::Text(title_font,  " ", 24);
+	song_title = new sf::Text(title_font,  " ", 24);
 	artist_text = new sf::Text(title_font, " ", 18); 
 
-	t->setPosition({SCREEN_WIDTH / 2, 600});
-	t->setFillColor(sf::Color::Red);
+	song_title->setPosition({SCREEN_WIDTH / 2, 600});
+	song_title->setFillColor(sf::Color::Red);
 
 	
 	artist_text->setPosition({SCREEN_WIDTH / 2, 400});
@@ -23,10 +23,11 @@ MediaWindow::MediaWindow() : WindowADT("Media Window"){
 
 	
 void MediaWindow::display_song_title(const Song* song){
-	if(!song || !t ){
+	if(!song || !song_title ){
 		return; 
 	}
-	t->setString(song->get_title());
+	song_title->setString(song->get_title());
+	center_text(song_title);
 }
 
 void MediaWindow::display_song_artist(const Song* song){
@@ -40,10 +41,17 @@ void MediaWindow::display_song_album(const Song* song){
 
 }
 
+
+void MediaWindow::center_text(sf::Text* text){
+	sf::FloatRect bounds = text->getLocalBounds();
+	text->setOrigin(bounds.getCenter());
+}
+
+
 void MediaWindow::draw(){
 	//draw title
-	if (t){
-		window.draw(*t);
+	if (song_title){
+		window.draw(*song_title);
 	}
 
 	//draw artist
@@ -61,7 +69,6 @@ void MediaWindow::display_song_info(const Song* song){
 
 
 MediaWindow::~MediaWindow(){
-	delete t;
+	delete song_title;
 	delete artist_text; 
-
 }
