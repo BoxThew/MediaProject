@@ -28,6 +28,7 @@ void WindowADT::handle_event(const sf::Event& event){
 	if (event.is<sf::Event::Closed>()){
 		window.close();
 	}
+	
 }
 
 

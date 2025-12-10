@@ -2,6 +2,8 @@
 #define SONG_HPP
 #include <string>
 #include <vector>
+#include <ostream>
+#include <istream>
 
 class Song{
 
@@ -38,6 +40,10 @@ public:
     std::vector<std::string> get_genres() const;
     unsigned int get_times_played() const;
 
+
+    void save(std::ofstream& file);
+
+    static Song load(std::ifstream& file);
 
 };
 

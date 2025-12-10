@@ -19,7 +19,6 @@ enum class PlayBack{
 PlayBack action(const char c);
 
 class PlayMedia{
-    MediaWindow window;
 
     std::deque<Song*> queue;
     std::stack<Song*> history;

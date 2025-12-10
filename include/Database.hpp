@@ -10,12 +10,12 @@
 #include <functional>
 
 //for reading and writing objects
-#include <fstream>
 
 
 //removed structs
 
 class Database{
+    static const std::string songs_file;
     static std::vector<std::unique_ptr<Song>> songs;
     static std::unordered_map<std::string, std::vector<Song*>> songs_by_artists;
 
@@ -45,7 +45,7 @@ public:
 
     static void save_songs();
 
-    static std::vector<std::unique_ptr<Song>> load_songs();
+    static void load_songs();
 
     static void add_song(const Song& song);
 

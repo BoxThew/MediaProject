@@ -9,20 +9,54 @@
 #include <string>
 #include <algorithm> 
 #include <stdexcept>
+#include <iostream>
 
+//for serializing
+#include <fstream>
 
-
+const std::string Database::songs_file = "songs.bin";
 std::vector<std::unique_ptr<Song>> Database::songs{};
 std::unordered_map<std::string, std::vector<Song*>> Database::songs_by_artists{};
 std::unordered_map<std::string, std::vector<Song*>> Database::songs_in_album{};
 
 
 void Database::save_songs(){
+    std::ofstream file(songs_file, std::ios::binary);
+    if (!file.is_open()){
+        std::cerr << "Error when trying to save songs.\n";
+        return;
+    }
+    
+
+    std::uint32_t songs_size = static_cast<std::uint32_t>(songs.size());
+    file.write(reinterpret_cast<const char*>(&songs_size), sizeof(songs_size));
+    for (const auto& song : songs){
+        song->save(file);
+    }
 
 }
 
 
-std::vector<std::unique_ptr<Song>> Database::load_songs(){
+void Database::load_songs(){
+    std::ifstream file(songs_file, std::ios::binary);
+    
+    songs.clear();
+    songs_by_artists.clear();
+    songs_in_album.clear();
+
+    if (!file.is_open()){
+        std::cerr << "Could not load songs.\n";
+        return;
+    }
+
+    std::uint32_t songs_size = 0;
+    file.read(reinterpret_cast<char *>(&songs_size), sizeof(songs_size));
+
+    songs.reserve(songs_size);
+    for (std::uint32_t x = 0; x < songs_size; ++x){
+        Song song = Song::load(file);
+        add_song(song);
+    }
     
 }
 
@@ -81,6 +115,7 @@ void Database::add_song(const Song& song){
     add_to_album(album, pSong);
 
     songs.push_back(std::move(spSong));
+    
 }
 
 
