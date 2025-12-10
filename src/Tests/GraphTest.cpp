@@ -1,17 +1,15 @@
-/*
-#include "MediaWindow.hpp"
-
-#include "Song.hpp"
+#include "SongGraph.hpp"
 #include "Database.hpp"
+#include "Song.hpp"
 #include "tag.h"
 #include "fileref.h"
-#include <string>
+#include <iostream>
 #include <filesystem>
 
 using itr = std::filesystem::directory_iterator;
 
-int  main(){
-    // Load all songs from the songs directory into the database
+int main() {
+    // Load songs into Database
     std::string path = "songs";
     for (const auto& entry : itr(path)){
         std::string file_path = entry.path();
@@ -30,14 +28,23 @@ int  main(){
         Database::add_song(s);
     }
 
-    // Create and run the media window
-    MediaWindow m;
-    m.run();
+    SongGraph graph;
+    graph.graph_by_artist();
+
+    // pass graph to your UI / TUI if you want, or just test:
+    auto& allSongs = Database::get_all_songs();
+    if (!allSongs.empty()) {
+        Song* first = allSongs[0].get();
+        auto neighbors = graph.get_similar_songs(first);
+
+        std::cout << "Songs with the same artist as "
+                  << first->get_title() << ":\n";
+        for (Song* s : neighbors) {
+            std::cout << "  - " << s->get_title()
+                      << " by " << s->get_artist() << "\n";
+        }
+    }
     
     return 0;
 }
-*/
-
-
-
 

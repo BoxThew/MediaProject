@@ -256,7 +256,6 @@ void MediaWindow::draw(){
 		y += lineHeight; 
 	}
 
-
 	//draw buttons and labels
 	window.draw(prev_button);
 	window.draw(play_button);
@@ -266,7 +265,6 @@ void MediaWindow::draw(){
 	window.draw(play_label);
 	window.draw(next_label); 
 }
-
 
 void MediaWindow::display_song_info(const Song* song){
 	display_song_title(song);
