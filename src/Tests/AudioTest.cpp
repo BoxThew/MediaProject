@@ -28,6 +28,12 @@ int main(){
     p.play_songs();
 
     Database::save_songs();
+
+    std::vector<Song*> top_songs = Database::get_top_songs();
+    for (const auto& song : top_songs){
+        std::cout << "You listened to " <<song->get_title() << 
+        ' ' << song->get_times_played() << " times!\n";
+    }
     
     
     return 0;

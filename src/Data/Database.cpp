@@ -14,11 +14,15 @@
 //for serializing
 #include <fstream>
 
+bool ByTimesListened::operator()(const Song* s1, const Song *s2) const{
+        return s1->get_times_played() < s2->get_times_played();
+    }
+
 const std::string Database::songs_file = "songs.bin";
 std::vector<std::unique_ptr<Song>> Database::songs{};
 std::unordered_map<std::string, std::vector<Song*>> Database::songs_by_artists{};
 std::unordered_map<std::string, std::vector<Song*>> Database::songs_in_album{};
-std::map<int, Song*> Database::top_songs{};
+std::priority_queue<Song*, std::vector<Song*>, ByTimesListened> Database::top_songs{};
 
 
 void Database::save_songs(){
@@ -206,5 +210,25 @@ std::vector<Song*>& Database::get_album_songs(const std::string& artist,
     
     throw std::out_of_range("Album " + album + " by " +
                             artist + " not found.\n");
+
+}
+
+
+std::vector<Song*> Database::get_top_songs(){
+    while (!top_songs.empty())
+        top_songs.pop();
+
+    for (const auto& song : songs){
+        top_songs.push(song.get());
+    }
+
+    std::vector<Song*> top_songs_list{};
+    int x = 0;
+    while (!top_songs.empty() && x++ < 5){
+        top_songs_list.push_back(top_songs.top());
+        top_songs.pop();
+    }
+
+    return top_songs_list;
 
 }
