@@ -9,8 +9,11 @@
 
 
 sf::Color white = sf::Color::White;
-sf::Color blue = sf::Color::Blue; 
-sf::Color red = sf::Color::Red; 
+sf::Color blue = sf::Color(146, 175, 215); 
+sf::Color red = sf::Color(188, 71, 73); 
+sf::Color beige = sf::Color(242, 232, 207); 
+sf::Color green = sf::Color(56, 102, 65);
+
 
 
 MediaWindow::MediaWindow(): WindowADT("Media Window"), 

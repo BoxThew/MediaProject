@@ -5,6 +5,7 @@
 
 
 
+
 WindowADT::WindowADT(const std::string& window_title){
 	this->window_title = window_title;
 
@@ -37,7 +38,6 @@ void WindowADT::run(){
 	while (window.isOpen()){
 
 		process_events();
-
 		render_once();
 		
 	}
@@ -51,7 +51,8 @@ void WindowADT::process_events(){
 }
 
 void WindowADT::render_once(){
-	window.clear();
+	
+	window.clear(sf::Color(242, 232, 207)); 
 	draw();
 	window.display();
 }
