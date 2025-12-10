@@ -19,13 +19,17 @@ protected:
 
     virtual void handle_event(const sf::Event& event);
 
-
     //must override this 
     virtual void draw() = 0;
 
 public:
 
+    bool is_open() const;
+
     void run();
+
+void process_events();
+void render_once();
 
 
     //must override destructor

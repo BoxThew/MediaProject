@@ -11,7 +11,7 @@
 
 class MediaWindow : public WindowADT{
 	sf::Font title_font;
-	sf::Text *t;
+	sf::Text *song_title;
 	sf::Text *artist_text;
 
 	std::vector<Song*> songs;
@@ -24,6 +24,8 @@ class MediaWindow : public WindowADT{
 	void display_song_artist(const Song* song);
 
 	void display_song_album(const Song* song);
+
+	void center_text(sf::Text* text);
 
 
 protected:

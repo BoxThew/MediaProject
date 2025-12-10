@@ -7,7 +7,8 @@
 #include "SFML/Audio/SoundSource.hpp"
 
 #include <ctime>
-#include <iostream> 
+#include <iostream>
+#include <chrono>
 
 PlayBack action(const char c){
     switch(c){
@@ -46,6 +47,7 @@ void PlayMedia::play_songs(){
     while (!queue.empty()){
 
         current_song = queue.front();
+        window.display_song_info(current_song);
 
         PlayBack result = play_current_song();
 
@@ -75,14 +77,29 @@ PlayBack PlayMedia::play_current_song(){
         
         return PlayBack::ERROR;
     }
+
+    const std::chrono::seconds min_time_listened {30};
+    bool song_min_listened = false;
+    
+    auto start = std::chrono::high_resolution_clock::now();
+
     std::cout << "Now playing " << title << " by " << artist << "!\n";
     music.play();
-    bool playing = true;
-    while (playing){
+    while (still_playing(music) && window.is_open()){
 
-        if (!still_playing(music)){
-            break;
+        if (!song_min_listened){
+            auto stop = std::chrono::high_resolution_clock::now();
+
+            auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+            if (duration >= min_time_listened){
+                current_song->inc_times_played();
+                song_min_listened = true;
+            }
         }
+
+
+        window.process_events();
+        window.render_once();
 
         char peeked = std::cin.peek();
         std::cin.get();

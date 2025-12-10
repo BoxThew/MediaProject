@@ -41,7 +41,7 @@ int main(){
     
     PlayMedia p;
 
-    p.set_queue(Database::get_artist_songs("TWICE"));
+    p.set_queue(Database::get_all_songs());
 
     p.play_songs();
     
