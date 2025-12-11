@@ -42,7 +42,7 @@ void Database::save_songs(){
 }
 
 
-void Database::load_songs(){
+bool Database::load_songs(){
     std::ifstream file(songs_file, std::ios::binary);
     
     songs.clear();
@@ -51,7 +51,7 @@ void Database::load_songs(){
 
     if (!file.is_open()){
         std::cerr << "Could not load songs.\n";
-        return;
+        return false;
     }
 
     std::uint32_t songs_size = 0;
@@ -62,7 +62,7 @@ void Database::load_songs(){
         Song song = Song::load(file);
         add_song(song);
     }
-    
+    return true;
 }
 
 Database::Database(){

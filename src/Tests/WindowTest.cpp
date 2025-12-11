@@ -10,6 +10,7 @@
 
 using itr = std::filesystem::directory_iterator;
 
+/*
 
 int  main(){
     // Load all songs from the songs directory into the database
@@ -35,10 +36,10 @@ int  main(){
     MediaWindow w;
     w.run();
     
-    
     return 0;
 }
 
 
 
 
+*/

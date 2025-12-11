@@ -44,7 +44,7 @@ public:
 
     static void save_songs();
 
-    static void load_songs();
+    static bool load_songs();
 
     static void add_song(const Song& song);
 
