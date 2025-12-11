@@ -153,10 +153,12 @@ void MediaWindow::handle_event(const sf::Event& event){
 			return; 
 		}
 
+		
+
 		if(contains_point(play_button, m_x, m_y)){
 			if(selected_index >= 0 && selected_index < static_cast<int>(songs.size())){
 				display_song_info(songs[selected_index]);
-				play_selected_song(); 
+				pm.toggle_song(); 
 			}
 			
 			return; 
