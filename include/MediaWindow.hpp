@@ -10,6 +10,8 @@
 #include "Database.hpp"
 #include <vector>
 
+class SongGraph; 
+
 class MediaWindow: public WindowADT{
 	sf::Font title_font;
 	sf::Text *song_title;
@@ -19,6 +21,8 @@ class MediaWindow: public WindowADT{
 	std::vector<Song*> songs;
 	int selected_index = -1; 
 	int first_visible_index = 0; 
+
+	SongGraph* graph = nullptr;
 
 	//Buttons
 	sf::RectangleShape prev_button;
@@ -58,7 +62,8 @@ protected:
 	void handle_event(const sf::Event& event) override; 
 
 public:
-	MediaWindow();
+	// MediaWindow();
+	explicit MediaWindow(SongGraph* g); 
 
 	void display_song_info(const Song* song);
 

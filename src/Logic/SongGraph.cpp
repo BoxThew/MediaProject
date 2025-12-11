@@ -62,7 +62,7 @@ void SongGraph::graph_by_artist(){
     
     //connect songs for each artist
     for(auto& pair: byArtist){
-        std::vector<Song*> group = pair.second;
+        std::vector<Song*>& group = pair.second;
         
         for(std::size_t i = 0; i < group.size(); i++){
             for(std::size_t j = i + 1; j < group.size(); j++){

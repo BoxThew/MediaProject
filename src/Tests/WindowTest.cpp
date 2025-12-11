@@ -1,6 +1,6 @@
 
 #include "MediaWindow.hpp"
-
+#include <SongGraph.hpp>
 #include "Song.hpp"
 #include "Database.hpp"
 #include "tag.h"
@@ -8,9 +8,9 @@
 #include <string>
 #include <filesystem>
 
+
 using itr = std::filesystem::directory_iterator;
 
-/*
 
 int  main(){
     // Load all songs from the songs directory into the database
@@ -32,8 +32,11 @@ int  main(){
         Database::add_song(s);
     }
 
+    SongGraph graph;
+    graph.graph_by_artist(); 
+
     // Create and run the media window
-    MediaWindow w;
+    MediaWindow w(&graph);
     w.run();
     
     return 0;
@@ -42,4 +45,4 @@ int  main(){
 
 
 
-*/
+
