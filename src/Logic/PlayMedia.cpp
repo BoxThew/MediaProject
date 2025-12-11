@@ -48,6 +48,7 @@ void PlayMedia::play_songs(){
 
         current_song = queue.front();
 
+
         PlayBack result = play_current_song();
 
         switch(result){
@@ -92,31 +93,9 @@ PlayBack PlayMedia::play_current_song(){
     while (still_playing(music)){
 
         
-        
 
 
         
-
-        char peeked = std::cin.peek();
-        std::cin.get();
-        PlayBack choice = action(peeked);
-        
-        switch(choice){
-            default:
-                break;
-
-            case PlayBack::SKIP:
-                skip_song(music);
-                return PlayBack::SKIP;
-
-            case PlayBack::PREV:
-                prev_song(music);
-                return PlayBack::PREV;
-
-            case PlayBack::TOGGLE:
-                toggle_song(music);
-
-        }
         
         sf::sleep(sf::milliseconds(60));
     }
