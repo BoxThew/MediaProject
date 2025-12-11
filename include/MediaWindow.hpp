@@ -9,6 +9,7 @@
 #include "Song.hpp"
 #include "Database.hpp"
 #include <vector>
+#include "PlayMedia.hpp"
 
 class SongGraph; 
 
@@ -19,6 +20,9 @@ class MediaWindow: public WindowADT{
 
 	//song list
 	std::vector<Song*> songs;
+	PlayMedia pm;
+
+
 	int selected_index = -1; 
 	int first_visible_index = 0; 
 
@@ -64,6 +68,8 @@ protected:
 public:
 	// MediaWindow();
 	explicit MediaWindow(SongGraph* g); 
+
+	void load_songs();
 
 	void display_song_info(const Song* song);
 

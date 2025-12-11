@@ -71,6 +71,11 @@ graph(g)
 }
 
 
+void MediaWindow::load_songs(){
+	auto& all_songs = Database::get_all_songs();
+	pm.set_queue(all_songs);
+}
+
 bool MediaWindow::contains_point(const sf::RectangleShape& rect, float x, float y){
 	return rect.getGlobalBounds().contains({x, y}); 
 }
