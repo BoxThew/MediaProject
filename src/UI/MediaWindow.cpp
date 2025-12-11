@@ -35,6 +35,7 @@ next_label(title_font, "Next", 18)
 		songs.push_back(s.get()); 
 	}
 
+
 	//Buttons
 	sf::Vector2f buttonSize(100.0f, 40.0f); 
 	float bottomY = 740.f;
@@ -275,3 +276,4 @@ MediaWindow::~MediaWindow(){
 	delete song_title;
 	delete artist_text; 
 }
+

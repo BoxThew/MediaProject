@@ -1,6 +1,6 @@
 
 
-/* 
+
 #include "SongGraph.hpp"
 #include "Database.hpp"
 #include "Song.hpp"
@@ -43,5 +43,3 @@ int main(){
     m.run();
 
 }
-/* 
-*/

@@ -10,8 +10,8 @@
 
 using itr = std::filesystem::directory_iterator;
 
-/*
 
+/*
 int  main(){
     // Load all songs from the songs directory into the database
     std::string path = "songs";
